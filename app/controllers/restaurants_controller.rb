@@ -19,6 +19,16 @@ class RestaurantsController < ApplicationController
   def edit
   end
 
+  # GET /restaurants/:id/chef
+  def chef
+    # Grab the restaurant using params[:id]
+    @restaurant = Restaurant.find(params[:id])
+    # Grab the chef info for this restaurant
+    @chef_name = @restaurant.chef_name
+
+    # render "restaurants/chef.html.erb"
+  end
+
   # POST /restaurants
   def create
     @restaurant = Restaurant.new(restaurant_params)
@@ -43,6 +53,12 @@ class RestaurantsController < ApplicationController
   def destroy
     @restaurant.destroy
     redirect_to restaurants_url, notice: "Restaurant was successfully destroyed."
+  end
+
+  def top
+    # Grab all 5 star restaurants
+    @restaurants = Restaurant.where(rating: 5)
+    # render 'restaurants/top.html.erb'
   end
 
   private
